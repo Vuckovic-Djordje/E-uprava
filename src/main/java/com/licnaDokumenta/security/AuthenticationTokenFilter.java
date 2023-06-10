@@ -6,6 +6,7 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,11 +18,15 @@ import java.io.IOException;
 
 public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+    private final TokenUtils tokenUtils;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private TokenUtils tokenUtils;
+    public AuthenticationTokenFilter(UserDetailsService userDetailsService, TokenUtils tokenUtils, AuthenticationManager authenticationManager) {
+        this.userDetailsService = userDetailsService;
+        this.tokenUtils = tokenUtils;
+        this.authenticationManager = authenticationManager;
+    }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {

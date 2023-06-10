@@ -1,9 +1,9 @@
 package com.licnaDokumenta.service;
 
-
 import com.licnaDokumenta.dto.CheckUserIDResponse;
 import com.licnaDokumenta.dto.IDRequest;
 import com.licnaDokumenta.dto.IDResponse;
+import com.licnaDokumenta.model.User;
 import com.licnaDokumenta.model.UsersId;
 import com.licnaDokumenta.repository.UserRepository;
 import com.licnaDokumenta.repository.UsersIdRepository;
@@ -43,5 +43,11 @@ public class UsersIdService {
             return new CheckUserIDResponse(false);
         }
         return new CheckUserIDResponse(true);
+    }
+
+    public void remove(Long id) {usersIdRepository.deleteById(id); }
+
+    public void save(UsersId usersId){
+        usersIdRepository.save(usersId);
     }
 }
